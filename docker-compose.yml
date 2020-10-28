@@ -23,7 +23,7 @@ services:
                ./manage.py migrate &&
                ./manage.py runserver 0.0.0.0:8000"
     volumes:
-      - ./:/code
+      - ./:/code:Z
     ports:
       - "8000:8000"
     depends_on:
@@ -40,11 +40,14 @@ services:
       - api
     links:
       - api:api
+    volumes:
+      - ./frontend/coalesce/src/:/app/src/:z
+      - ./frontend/coalesce/quasar.conf.js:/app/quasar.conf.js:z
   documentation:
     restart: always
     build: ./
     command: "mkdocs serve"
     volumes:
-      - ./:/code
+      - ./:/code:Z
     ports:
       - "8001:8001"
